@@ -8,13 +8,13 @@ RSpec.describe 'create application' do
       click_link 'Start an Application'
 
       expect(current_path).to eq('/applications/new')
-      # expect(page).to have_content('New Application')
-      # expect(page).to have_content('Name')
-      # expect(page).to have_content("Street Address ")
-      # expect(page).to have_content('City')
-      # expect(page).to have_content('State')
-      # expect(page).to have_content('Zip Code')
-      # expect(page).to have_content('Description')
+      expect(page).to have_content('New Application')
+      expect(page).to have_content('Name')
+      expect(page).to have_content("Street Address")
+      expect(page).to have_content('City')
+      expect(page).to have_content('State')
+      expect(page).to have_content('Zip Code')
+      expect(page).to have_content('Description')
     end
   end
 
