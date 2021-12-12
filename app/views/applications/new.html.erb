@@ -1,26 +1,26 @@
 <h1>New Application</h1>
-<%= bootstrap_form_with url: "/applications", method: :post, local: true do |f| %>
+<%= bootstrap_form_tag url: "/applications", method: :post, local: true do |f| %>
 
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+
+  <%= f.text_field :name, label: "Name ", required: true %>
   <br>
-  <%= f.label :street_address %>
-  <%= f.text_field :street_address %>
+
+  <%= f.text_field :street_address, label: "Street Address ", required: true %>
   <br>
-  <%= f.label :city %>
-  <%= f.text_field :city %>
+
+  <%= f.text_field :city, label: "City ", required: true %>
   <br>
-  <%= f.label :state %>
-  <%= f.text_field :state %>
+
+  <%= f.text_field :state, label: "State ", required: true %>
   <br>
-  <%= f.label :zip_code %>
-  <%= f.text_field :zip_code %>
+
+  <%= f.text_field :zip_code, label: "Zip Code ", required: true %>
   <br>
   <br>
   What qualifies you to be a pet owner?
   <br>
-  <%= f.label :description %><br>
-  <%= f.text_area :description %>
+  <br>
+  <%= f.text_area :description, required: true  %>
   <br>
   <%= f.hidden_field :status, :value => "In Progress" %>
   <%= f.submit %>
