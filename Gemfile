@@ -44,6 +44,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-rails'
   gem 'simplecov'
+  gem "bootstrap_form", "~> 5.0"
 end
 
 group :development do

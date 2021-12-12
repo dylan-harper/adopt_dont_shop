@@ -29,7 +29,7 @@ RSpec.describe 'create application' do
 
         click_button('Save')
 
-        expect(page).to have_current_path(current_url)#works, but would like to make it more dynamic
+        expect(page).to have_current_path("/applications/#{Application.last.id}")
         expect(page).to have_content('Joe J')
     end
 
