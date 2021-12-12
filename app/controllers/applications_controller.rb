@@ -29,7 +29,8 @@ class ApplicationsController < ApplicationController
                   :state,
                   :zip_code,
                   :description,
-                  :status)
+                  :status,
+                  :id)
   end
 
 end
