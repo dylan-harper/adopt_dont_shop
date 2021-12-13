@@ -6,7 +6,11 @@ class ApplicationsController < ApplicationController
     if params[:search].present?
       @pets = Pet.search(params[:search])
     else
-      @pets = @application.pets
+      @pets = []
+    end
+
+    if params[:pet_id].present?
+      @application.pets << Pet.find(pet_params[:pet_id])
     end
   end
 
@@ -37,6 +41,10 @@ class ApplicationsController < ApplicationController
                   :description,
                   :status,
                   :id)
+  end
+
+  def pet_params
+    params.permit(:pet_id)
   end
 
 end
