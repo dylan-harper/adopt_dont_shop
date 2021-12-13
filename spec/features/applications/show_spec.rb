@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'application show' do
   before :each do
+    @shelter = Shelter.create(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
+    @pet_1 = Pet.create(adoptable: true, age: 1, breed: 'sphynx', name: 'Lucille Bald', shelter_id: @shelter.id)
+    @pet_2 = Pet.create(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: @shelter.id)
+
     @application = Application.create!(name: 'Bill Jones',
                                        description: 'Loving Family',
                                        status: 'pending'
@@ -22,4 +26,21 @@ RSpec.describe 'application show' do
 
     expect(page).to have_content(@application.name)
   end
+
+  it 'can search a pet name' do
+    visit "/applications/#{@application.id}"
+
+    expect(page).to have_content("Add a Pet to this Application")
+
+    fill_in :search, with: "Lucille Bald"
+    click_button('Search')
+
+    expect(current_path).to eq("/applications/#{@application.id}")
+    expect(page).to have_content('Bill Jones')
+    expect(page).to have_content('Lucille Bald')
+  end
+
+
+
+
 end
