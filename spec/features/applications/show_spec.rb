@@ -16,6 +16,7 @@ RSpec.describe 'application show' do
                                  zip_code: 78945
     )
   end
+
   it 'exists' do
     expect(@application).to be_an_instance_of(Application)
     expect(@address).to be_an_instance_of(Address)
@@ -40,7 +41,18 @@ RSpec.describe 'application show' do
     expect(page).to have_content('Lucille Bald')
   end
 
+  xit 'can add a pet to the application' do
+    visit "/applications/#{@application.id}"
 
+    expect(page).to have_content("Add a Pet to this Application")
 
-
+    fill_in :search, with: "Lucille Bald"
+    click_button('Search')
+    click_button 'Adopt this Pet'
+  end
 end
+# <button><%= link_to 'Adopt this Pet',  "/applications/#{@application.id}?query=#{pet.id}", method: :get %></button>
+# <h3>Pets chosen for application: </h3>
+# <% @chosen_pets.each do |pet| %>
+#   <p><%= pet.name %></p>
+# <% end %>
