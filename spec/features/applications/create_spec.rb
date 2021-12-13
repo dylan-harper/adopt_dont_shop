@@ -10,10 +10,10 @@ RSpec.describe 'create application' do
       expect(current_path).to eq('/applications/new')
       expect(page).to have_content('New Application')
       expect(page).to have_content('Name')
-      expect(page).to have_content("Street Address")
+      expect(page).to have_content("Street address")
       expect(page).to have_content('City')
       expect(page).to have_content('State')
-      expect(page).to have_content('Zip Code')
+      expect(page).to have_content('Zip code')
       expect(page).to have_content('Description')
     end
   end
@@ -26,10 +26,10 @@ RSpec.describe 'create application' do
         click_link 'Start an Application'
 
         fill_in 'Name', with: 'Joe J'
-        fill_in 'Street Address', with: '100 Longhorn Lane'
+        fill_in 'Street address', with: '100 Longhorn Lane'
         fill_in 'City', with: 'Houston'
         fill_in 'State', with: 'Texas'
-        fill_in 'Zip Code', with: 12345
+        fill_in 'Zip code', with: 12345
         fill_in 'Description', with: "Big yard and loving family"
 
         click_button('Save')
