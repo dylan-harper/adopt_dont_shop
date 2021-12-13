@@ -1,7 +1,16 @@
+<p>Add a Pet to this Application </p>
+  <%= form_tag("/applications/#{@application.id}?query=search", method: :get) %>
+    <%= text_field_tag(:search, params[:search]) %>
+    <%= submit_tag ("Search") %>
+
+    <% @pets.each do |pet| %>
+      <p><%= pet.name %></p>
+    <% end %>
+
+
 <h1>Application # <%= @application.id %> </h1>
 <h3>Name: <%= @application.name %></h3>
 <h3>Description: <%= @application.description %> </h3>
 <h3>Status: <%= @application.status %></h3>
 <h3>Created at:<%= @application.created_at %></h3>
 <h3>Updated at:<%= @application.updated_at %></h3>
-<!-- add desired pets -->
