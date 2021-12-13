@@ -7,10 +7,12 @@
 
 <% @pets.each do |pet| %>
   <p><%= pet.name %></p>
-  <button><%= link_to 'Adopt this Pet',  "/applications/#{@application.id}", method: :get %></button>
+  <%= button_to 'Adopt this Pet', "/applications/#{@application.id}/#{pet.id}", method: :get %>
 <% end %>
 
-
+<% @application.pets.each do |pet| %>
+<h3> <%= @application.status %>, <%= pet.name %>  </h3>
+<% end %>
 
 <h1>Application # <%= @application.id %> </h1>
 <h3>Name: <%= @application.name %></h3>
