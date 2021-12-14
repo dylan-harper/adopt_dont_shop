@@ -8,7 +8,7 @@ RSpec.describe 'application show' do
 
     @application = Application.create!(name: 'Bill Jones',
                                        description: 'Loving Family',
-                                       status: 'pending'
+                                       status: 'In Progress'
     )
     @address = @application.create_address(street_address: '100 Longhorn Way',
                                  city: 'Ojai',
@@ -59,9 +59,25 @@ RSpec.describe 'application show' do
     expect(page).to have_content("#{@application.status}, Lucille Bald")
     expect(page).to have_content("#{@application.status}, Lobster")
   end
+
+  it 'can submit the application' do
+    visit "/applications/#{@application.id}"
+
+    fill_in :search, with: "Lucille Bald"
+    click_button('Search')
+    click_button 'Adopt this Pet'
+
+    fill_in :search, with: "Lobster"
+    click_button('Search')
+    click_button 'Adopt this Pet'
+
+    fill_in :description, with: "Big yard"
+
+    click_button 'Submit Application'
+
+    expect(current_path).to eq("/applications/#{@application.id}")
+    expect(page).to have_content("Big yard")
+    expect(page).to have_content("Pending")
+    expect(page).to_not have_content("Add a Pet to this Application")
+  end
 end
-# <button><%= link_to 'Adopt this Pet',  "/applications/#{@application.id}?query=#{pet.id}", method: :get %></button>
-# <h3>Pets chosen for application: </h3>
-# <% @chosen_pets.each do |pet| %>
-#   <p><%= pet.name %></p>
-# <% end %>
