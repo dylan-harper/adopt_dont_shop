@@ -12,7 +12,23 @@ class ApplicationsController < ApplicationController
     if params[:pet_id].present?
       @application.pets << Pet.find(pet_params[:pet_id])
     end
+
+    if params[:commit].present?
+      @application.write_attribute(:description, params[:description])
+      @application.write_attribute(:status, "Pending")
+    end
   end
+
+  # def update
+  #   @application = Application.find(params[:id])
+  #
+  #   @application.write_attribute(:description, params[:description])
+  #   @application.write_attribute(:status, "Pending")
+  #
+  #   redirect_back fallback_location: "/applications/#{@application.id}"
+  # end
+
+
 
   def new
   end
@@ -45,6 +61,11 @@ class ApplicationsController < ApplicationController
 
   def pet_params
     params.permit(:pet_id)
+  end
+
+  def submit_params
+    params.permit(:description,
+                  :commit)
   end
 
 end

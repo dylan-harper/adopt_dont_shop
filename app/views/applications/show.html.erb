@@ -1,8 +1,18 @@
+<% if @application.pets.any? && @application.status != "Pending" %>
+<p>Would you like to add any other reasons you would be a good owner?</p>
+<%= form_tag("/applications/#{@application.id}?query=submit", method: :get) do %>
+  <%= text_field_tag :description, @application.description %>
+  <%= submit_tag "Submit Application" %>
+<% end %>
+<% end %>
+
+<% if @application.status == "In Progress" %>
 <p>Add a Pet to this Application: </p>
   <%= form_tag("/applications/#{@application.id}?query=search", method: :get) do %>
     <%= text_field_tag :search, params[:search] %>
     <%= submit_tag "Search" %>
   <% end %>
+<% end %>
 
 
 <% @pets.each do |pet| %>
