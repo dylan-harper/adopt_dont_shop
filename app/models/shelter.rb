@@ -5,9 +5,24 @@ class Shelter < ApplicationRecord
 
   has_many :pets, dependent: :destroy
 
-  # def self.order_by_recently_created
-  #   order(created_at: :desc)
-  # end
+  def self.order_by_recently_created
+    order(created_at: :desc)
+  end
+
+  def self.with_pending_apps
+    shelters = Shelter.all
+    pending = []
+    shelters.each do |shelter|
+      shelter.pets.each do |pet|
+        pet.applications.each do |app|
+          if app.status == 'Pending'
+            pending << shelter
+          end
+        end
+      end
+    end
+    pending = pending.uniq
+  end
 
   def self.order_by_reverse_alphabetical
     select("shelters.*")

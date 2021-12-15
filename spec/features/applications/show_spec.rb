@@ -93,4 +93,11 @@ RSpec.describe 'application show' do
     expect(page).to have_content("Lucille Bad")
     expect(page).to have_content("Lucille Baddest")
   end
+
+  xit '' do
+    visit "/admin/applications/#{@application.id}"
+
+
+    click_button "Approve"
+  end
 end

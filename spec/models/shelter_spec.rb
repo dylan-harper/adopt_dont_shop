@@ -41,6 +41,32 @@ RSpec.describe Shelter, type: :model do
         expect(Shelter.order_by_number_of_pets).to eq([@shelter_1, @shelter_3, @shelter_2])
       end
     end
+
+    describe '::with_pending_apps' do
+      it 'filters all shelters based on whether they have a pending application' do
+        app_1 = @pet_1.applications.create!(name: 'Bill Jones',
+                                           description: 'Loving Family',
+                                           status: 'In Progress')
+        app_2 = @pet_2.applications.create!(name: 'Bill Jones',
+                                           description: 'Loving Family',
+                                           status: 'Pending')
+        app_3 = @pet_3.applications.create!(name: 'Bill Jones',
+                                           description: 'Loving Family',
+                                           status: 'Pending')
+        app_4 = @pet_4.applications.create!(name: 'Bill Jones',
+                                           description: 'Loving Family',
+                                           status: 'In Progress')
+
+        expect(app_1).to be_an_instance_of(Application)
+        expect(Shelter.with_pending_apps).to eq([@shelter_1, @shelter_3])
+      end
+    end
+
+    describe '::order_by_reverse_alphabetical' do
+      it 'orders shelters by name in reverse alphabetical order' do
+        expect(Shelter.order_by_reverse_alphabetical).to eq([@shelter_2, @shelter_3, @shelter_1])
+      end
+    end
   end
 
   describe 'instance methods' do
@@ -67,5 +93,8 @@ RSpec.describe Shelter, type: :model do
         expect(@shelter_1.pet_count).to eq(3)
       end
     end
+
+
+
   end
 end

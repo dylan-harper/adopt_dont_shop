@@ -8,6 +8,8 @@ class SheltersController < ApplicationController
       # @shelters = Shelter.order_by_recently_created
       @shelters = Shelter.order_by_reverse_alphabetical
     end
+
+    @shelters_with_pending_apps = Shelter.with_pending_apps
   end
 
   def pets
