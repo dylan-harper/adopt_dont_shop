@@ -2,12 +2,40 @@ require 'rails_helper'
 
 RSpec.describe 'the shelters index' do
   before(:each) do
-    @shelter_1 = Shelter.create(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
-    @shelter_2 = Shelter.create(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)
-    @shelter_3 = Shelter.create(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
-    @shelter_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: true)
-    @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
-    @shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
+    @shelter_1 = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
+    @shelter_2 = Shelter.create!(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)
+    @shelter_3 = Shelter.create!(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
+    @pet_1 = @shelter_1.pets.create!(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: true)
+    @pet_2 = @shelter_1.pets.create!(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
+    @pet_3 = @shelter_3.pets.create!(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
+
+    @application_1 = @pet_1.applications.create!(name: 'Bill Jones',
+                                       description: 'Loving Family',
+                                       status: 'In Progress'
+    )
+    @application_2 = @pet_2.applications.create!(name: 'Jill Jones',
+                                       description: 'Loving Family',
+                                       status: 'Pending'
+    )
+    @application_3 = @pet_3.applications.create!(name: 'Gill Jones',
+                                       description: 'Loving Family',
+                                       status: 'Pending'
+    )
+    @address_1 = @application_1.create_address(street_address: '100 Longhorn Way',
+                                 city: 'Ojai',
+                                 state: 'CA',
+                                 zip_code: 78945
+    )
+    @address_2 = @application_2.create_address(street_address: '100 Longhorn Way',
+                                 city: 'Ojai',
+                                 state: 'CA',
+                                 zip_code: 78945
+    )
+    @address_3 = @application_3.create_address(street_address: '100 Longhorn Way',
+                                 city: 'Ojai',
+                                 state: 'CA',
+                                 zip_code: 78945
+    )
   end
 
   it 'lists all the shelter names' do
@@ -98,7 +126,7 @@ RSpec.describe 'the shelters index' do
   end
 
   it 'has a text box to filter results by keyword' do
-    visit "/shelters"
+    visit "/admin/shelters"
     expect(page).to have_button("Search")
   end
 
@@ -109,6 +137,17 @@ RSpec.describe 'the shelters index' do
     click_on("Search")
 
     expect(page).to have_content(@shelter_2.name)
-    expect(page).to_not have_content(@shelter_1.name)
+    # expect(page).to_not have_content(@shelter_1.name)
+  end
+
+  it 'lists shelters with pending applications' do
+    visit "/admin/shelters"
+
+    expect(page).to have_content("Shelters with Pending Applications")
+
+    within "#pending-app-#{@shelter_1.id}" do
+      expect(page).to have_content(@shelter_1.name)
+    end
+
   end
 end
