@@ -14,21 +14,10 @@ class ApplicationsController < ApplicationController
     end
 
     if params[:commit].present?
-      @application.write_attribute(:description, params[:description])
-      @application.write_attribute(:status, "Pending")
+      params = application_params
+      @application.edit_status(params)
     end
   end
-
-  # def update
-  #   @application = Application.find(params[:id])
-  #
-  #   @application.write_attribute(:description, params[:description])
-  #   @application.write_attribute(:status, "Pending")
-  #
-  #   redirect_back fallback_location: "/applications/#{@application.id}"
-  # end
-
-
 
   def new
   end
@@ -37,7 +26,7 @@ class ApplicationsController < ApplicationController
     application = Application.create(name: application_params[:name],
                                      description: application_params[:description],
                                      status: application_params[:status])
-    #ask how to encapsulate the below better
+
     address = application.create_address(street_address: application_params[:street_address],
                              city: application_params[:city],
                              state: application_params[:state],
